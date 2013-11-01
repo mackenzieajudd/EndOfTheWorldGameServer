@@ -1,0 +1,26 @@
+#ifndef EVENTS_H_
+#define EVENTS_H_
+
+#include "Players.h"
+#include <stdio.h>
+
+#define EVENT_TYPE_SIZE 1
+#define DISTRIBUTE_ID_SIZE 2
+#define GAME_OVER_SIZE 0
+#define PLAYER_READY_SIZE 0
+#define GAME_START_SIZE 0
+
+typedef enum
+{
+	DISTRIBUTE_ID,
+	GAME_OVER,
+	PLAYER_READY,
+	GAME_START
+}EVENT;
+
+void SendDistributeId(PLAYER player, unsigned char eventData[]);
+void SendGameOver(PLAYER player);
+void SendPlayerReady(PLAYER player);
+void SendGameStart(PLAYER player);
+
+#endif
