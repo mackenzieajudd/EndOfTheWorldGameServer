@@ -5,9 +5,11 @@
 
 typedef enum
 {
+	NONE,
 	PLAYER_1,
 	PLAYER_2
 }PLAYER;
+
 
 int GetNewPlayer(PLAYER* player);
 

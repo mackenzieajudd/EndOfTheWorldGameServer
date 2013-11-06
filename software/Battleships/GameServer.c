@@ -2,11 +2,13 @@
 #include "HAL/inc/sys/alt_timestamp.h"
 #include "Communications.h"
 #include "VGA.h"
+#include "GameManager.h"
 
 int main()
 {
-	InitializeCommunications();
-	InitializeVGA();
+	InitialiseCommunications();
+	//InitialiseVGA();
+	InitialiseGame();
 
 	//For Testing with DE2 loop back
 	//Don't actually use PublishEvent like this
@@ -21,7 +23,11 @@ int main()
 	//-----------------------------------------
 
 	while(1 == 1)
-		WaitOnCommand();
+	{
+		CheckForCommand();
+		printf("1:%s\n", PlayerEnumToString(GetGameManager().players[0].player));
+		printf("2:%s\n", PlayerEnumToString(GetGameManager().players[1].player));
+	}
 
 	return 0;
 }

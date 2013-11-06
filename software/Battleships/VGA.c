@@ -6,7 +6,7 @@ alt_up_pixel_buffer_dma_dev* pixel_buffer;
 alt_up_char_buffer_dev* char_buffer;
 int bufferFlag = 0;
 
-void InitializeVGA()
+void InitialiseVGA()
 {
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_0_NAME);
 	alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer, BACK_PIXEL_BUFFER_BASE);

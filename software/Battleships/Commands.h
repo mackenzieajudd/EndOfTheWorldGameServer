@@ -4,11 +4,15 @@
 #include "Players.h"
 #include "Events.h"
 #include <stdio.h>
+#include "GameManager.h"
 
 #define COMMAND_TYPE_SIZE 1
 #define REQUEST_ID_SIZE 1
 #define QUIT_SIZE 0
 #define READY_SIZE 0
+
+#define All_PLAYERS_FOUND 1
+#define ALL_PLAYERS_TAKEN 2
 
 typedef enum
 {

@@ -9,11 +9,11 @@
 #include "Events.h"
 #include "Players.h"
 
-void InitializeCommunications();
+void InitialiseCommunications();
 
 void PublishEvent(EVENT event, PLAYER player, unsigned char eventData[]);
 
-void WaitOnCommand();
+void CheckForCommand();
 void ReceiveCommand();
 void HandleCommand(COMMAND command, PLAYER player, unsigned char commandData[]);
 

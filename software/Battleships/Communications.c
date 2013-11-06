@@ -2,7 +2,7 @@
 
 alt_up_rs232_dev* serialConnection;
 
-void InitializeCommunications()
+void InitialiseCommunications()
 {
 	unsigned char data;
 	unsigned char parity;
@@ -69,12 +69,11 @@ void ReceiveCommand()
 	HandleCommand((COMMAND)command, (PLAYER)player, commandData);
 }
 
-void WaitOnCommand()
+void CheckForCommand()
 {
 	//Check if there are any commands ready to be received
-	while(alt_up_rs232_get_used_space_in_read_FIFO(serialConnection) == 0);
-
-	ReceiveCommand();
+	if(alt_up_rs232_get_used_space_in_read_FIFO(serialConnection) >= 1)
+		ReceiveCommand();
 }
 
 void HandleCommand(COMMAND command, PLAYER player, unsigned char commandData[])
