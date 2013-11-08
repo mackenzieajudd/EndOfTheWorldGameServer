@@ -1,6 +1,6 @@
 #include "Commands.h"
 
-void HandleRequestId(unsigned char commandData[])
+void HandleRequestId(char newPlayerId)
 {
 	PLAYER newPlayer;
 
@@ -11,26 +11,26 @@ void HandleRequestId(unsigned char commandData[])
 
 	if(requestNewPlayerResult != ALL_PLAYERS_TAKEN)
 	{
-		AddNewPlayer(newPlayer);
-		SendDistributeId(newPlayer, commandData);
+		AddNewPlayer(newPlayer, newPlayerId);
+		SendPlayerRegistered(newPlayerId);
 		if(requestNewPlayerResult == All_PLAYERS_FOUND)
-			SendAllPlayersFound(newPlayer);
+			SendAllPlayersFound(newPlayerId);
 	}
 	else
 		printf("A new PLAYER was requested but none are available\n");
 }
 
-void HandleQuit(PLAYER player)
+void HandleQuit(char playerId)
 {
-	printf("Handling QUIT command from %s\n", PlayerEnumToString(player));
-	SendGameOver(player);
+	printf("Handling QUIT command from %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
+	SendGameOver(playerId);
 }
 
-void HandleReady(PLAYER player)
+void HandleReady(char playerId)
 {
-	printf("Handling READY command from %s\n", PlayerEnumToString(player));
-	SetPlayerReady(player);
-	SendPlayerReady(player);
+	printf("Handling READY command from %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
+	SetPlayerReady(playerId);
+	SendPlayerReady(playerId);
 	if(ArePlayersReady() == 1) //All Players Ready
-		SendAllPlayersReady(player);
+		SendAllPlayersReady(playerId);
 }

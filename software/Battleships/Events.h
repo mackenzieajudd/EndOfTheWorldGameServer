@@ -12,7 +12,7 @@
 
 typedef enum
 {
-	DISTRIBUTE_ID,
+	PLAYER_REGISTRED,
 	ALL_PLAYERS_FOUND,
 	ALL_PLAYERS_READY,
 	GAME_OVER,
@@ -20,11 +20,11 @@ typedef enum
 	GAME_START
 }EVENT;
 
-void SendDistributeId(PLAYER player, unsigned char eventData[]);
-void SendAllPlayersFound(PLAYER player);
-void SendGameOver(PLAYER player);
-void SendPlayerReady(PLAYER player);
-void SendGameStart(PLAYER player);
-void SendAllPlayersReady(PLAYER player);
+void SendPlayerRegistered(char playerId);
+void SendAllPlayersFound(char playerId);
+void SendGameOver(char playerId);
+void SendPlayerReady(char playerId);
+void SendGameStart(char playerId);
+void SendAllPlayersReady(char playerId);
 
 #endif

@@ -12,7 +12,7 @@ void InitialiseGame()
 	printf("Game Initialised\n");
 }
 
-void AddNewPlayer(PLAYER newPlayer)
+void AddNewPlayer(PLAYER newPlayer, char newPlayerId)
 {
 	int i;
 
@@ -20,28 +20,28 @@ void AddNewPlayer(PLAYER newPlayer)
 	{
 		if(gameManager.players[i].valid == 0)
 		{
-			gameManager.players[i] = GetNewGamePlayer(newPlayer);
+			gameManager.players[i] = GetNewGamePlayer(newPlayer, newPlayerId);
 			break;
 		}
 	}
 
-	printf("%s was added to the game\n", PlayerEnumToString(newPlayer));
+	printf("%s was added to the game\n", PlayerEnumToString(PlayerIdToPlayer(newPlayerId)));
 }
 
-void SetPlayerReady(PLAYER player)
+void SetPlayerReady(char playerId)
 {
 	int i;
 
 	for(i = 0; i < 2; i++)
 	{
-		if(gameManager.players[i].player == player)
+		if(gameManager.players[i].id == playerId)
 		{
 			gameManager.players[i].ready = PLAYER_IS_READY;
 			break;
 		}
 	}
 
-	printf("%s is ready\n", PlayerEnumToString(player));
+	printf("%s is ready\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }
 
 struct GameManager GetGameManager()
@@ -60,4 +60,17 @@ int ArePlayersReady()
 	}
 
 	return ALL_PLAYERS_READY;
+}
+
+PLAYER PlayerIdToPlayer(char playerId)
+{
+	int i;
+
+	for(i = 0; i < 2; i++)
+	{
+		if(gameManager.players[i].id == playerId)
+			return gameManager.players[i].player;
+	}
+
+	return NONE;
 }

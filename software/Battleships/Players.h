@@ -1,8 +1,6 @@
 #ifndef PLAYERS_H_
 #define PLAYERS_H_
 
-#define PLAYER_ID_SIZE 1
-
 typedef enum
 {
 	NONE,

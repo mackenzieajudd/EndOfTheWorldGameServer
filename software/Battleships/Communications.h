@@ -11,10 +11,10 @@
 
 void InitialiseCommunications();
 
-void PublishEvent(EVENT event, PLAYER player, unsigned char eventData[]);
+void PublishEvent(char playerId, EVENT event, unsigned char eventData[]);
 
 void CheckForCommand();
 void ReceiveCommand();
-void HandleCommand(COMMAND command, PLAYER player, unsigned char commandData[]);
+void HandleCommand(char playerId, COMMAND command,  unsigned char commandData[]);
 
 #endif

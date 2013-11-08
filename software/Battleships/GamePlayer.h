@@ -14,11 +14,12 @@ struct GamePlayer
 
 	struct Board board;
 	PLAYER player;
+	char id;
 };
 
 void InitialiseGamePlayer(struct GamePlayer* gameplayer);
 struct GamePlayer GetInitialisedGamePlayer();
-struct GamePlayer GetNewGamePlayer(PLAYER newPlayer);
+struct GamePlayer GetNewGamePlayer(PLAYER newPlayer, char newPlayerId);
 int IsPlayerReady(struct GamePlayer gamePlayer);
 
 #endif

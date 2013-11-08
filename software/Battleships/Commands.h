@@ -21,8 +21,8 @@ typedef enum
 	READY
 }COMMAND;
 
-void HandleRequestId(unsigned char commandData[]);
-void HandleQuit(PLAYER player);
-void HandleReady(PLAYER player);
+void HandleRequestId(char newPlayerId);
+void HandleQuit(char playerId);
+void HandleReady(char playerId);
 
 #endif

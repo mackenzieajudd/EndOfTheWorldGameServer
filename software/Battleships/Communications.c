@@ -14,20 +14,20 @@ void InitialiseCommunications()
 		alt_up_rs232_read_data(serialConnection, &data, &parity);
 }
 
-void PublishEvent(EVENT event, PLAYER player, unsigned char eventData[])
+void PublishEvent(char playerId, EVENT event,  unsigned char eventData[])
 {
 	int i;
 
 	unsigned char numBytesInEvent = (unsigned char)strlen((const char*)eventData);
 
+	//Send Player ID
+	alt_up_rs232_write_data(serialConnection, playerId);
+
 	// Start with the number of bytes in our message
-	alt_up_rs232_write_data(serialConnection, PLAYER_ID_SIZE + EVENT_TYPE_SIZE + numBytesInEvent);
+	alt_up_rs232_write_data(serialConnection, EVENT_TYPE_SIZE + numBytesInEvent);
 
 	//Send Event Type
 	alt_up_rs232_write_data(serialConnection, event);
-
-	//Send Player ID
-	alt_up_rs232_write_data(serialConnection, player);
 
 	//Send Event Data
 	for (i = 0; i < numBytesInEvent; i++)
@@ -37,24 +37,24 @@ void PublishEvent(EVENT event, PLAYER player, unsigned char eventData[])
 void ReceiveCommand()
 {
 	unsigned char parity;
-	unsigned char player;
+	unsigned char playerId;
 	unsigned char command;
 	unsigned char dataSize;
 	int commandSize;
 
 	int i;
 
+	//Get Player ID
+	while (alt_up_rs232_get_used_space_in_read_FIFO(serialConnection) == 0);
+	alt_up_rs232_read_data(serialConnection, &playerId, &parity);
+
 	//Get Command Length
 	alt_up_rs232_read_data(serialConnection, &dataSize, &parity);
-	commandSize = (int)dataSize - PLAYER_ID_SIZE - COMMAND_TYPE_SIZE;
+	commandSize = (int)dataSize - COMMAND_TYPE_SIZE;
 
 	//Get Command Type
 	while (alt_up_rs232_get_used_space_in_read_FIFO(serialConnection) == 0);
 	alt_up_rs232_read_data(serialConnection, &command, &parity);
-
-	//Get Player ID
-	while (alt_up_rs232_get_used_space_in_read_FIFO(serialConnection) == 0);
-	alt_up_rs232_read_data(serialConnection, &player, &parity);
 
 	//Allocate Memory for Command
 	unsigned char* commandData = malloc(commandSize);
@@ -66,7 +66,7 @@ void ReceiveCommand()
 		alt_up_rs232_read_data(serialConnection, &commandData[i], &parity);
 	}
 
-	HandleCommand((COMMAND)command, (PLAYER)player, commandData);
+	HandleCommand(playerId, (COMMAND)command, commandData);
 }
 
 void CheckForCommand()
@@ -76,18 +76,18 @@ void CheckForCommand()
 		ReceiveCommand();
 }
 
-void HandleCommand(COMMAND command, PLAYER player, unsigned char commandData[])
+void HandleCommand(char playerId, COMMAND command, unsigned char commandData[])
 {
 	switch(command)
 	{
 		case REQUEST_ID:
-			HandleRequestId(commandData);
+			HandleRequestId(playerId);
 			break;
 		case QUIT:
-			HandleQuit(player);
+			HandleQuit(playerId);
 			break;
 		case READY:
-			HandleReady(player);
+			HandleReady(playerId);
 			break;
 	}
 }

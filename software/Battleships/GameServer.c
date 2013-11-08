@@ -4,6 +4,12 @@
 #include "VGA.h"
 #include "GameManager.h"
 
+void wait(float seconds)
+{
+	alt_timestamp_start();
+	while((float)(alt_timestamp())/(float)(alt_timestamp_freq()) < seconds);
+}
+
 int main()
 {
 	InitialiseCommunications();
@@ -14,19 +20,18 @@ int main()
 	//Don't actually use PublishEvent like this
 	//These are actually commands
 	//-----------------------------------------
-	PublishEvent(REQUEST_ID, PLAYER_2, "N");
-	PublishEvent(REQUEST_ID, PLAYER_2, "N");
-	PublishEvent(REQUEST_ID, PLAYER_2, "N");
-	PublishEvent(READY, PLAYER_2, "N");
-	PublishEvent(READY, PLAYER_1, "N");
-	PublishEvent(QUIT, PLAYER_2, "N");
+	PublishEvent('A', REQUEST_ID, "N");
+	PublishEvent('B', REQUEST_ID, "N");
+	PublishEvent('C', REQUEST_ID, "N");
+	PublishEvent('A', READY, "N");
+	PublishEvent('B', READY, "N");
+	PublishEvent('A', QUIT, "N");
 	//-----------------------------------------
 
 	while(1 == 1)
 	{
 		CheckForCommand();
-		printf("1:%s\n", PlayerEnumToString(GetGameManager().players[0].player));
-		printf("2:%s\n", PlayerEnumToString(GetGameManager().players[1].player));
+		wait(.1);
 	}
 
 	return 0;

@@ -1,31 +1,32 @@
 #include "Events.h"
+#include "GameManager.h"
 
-void SendDistributeId(PLAYER player, unsigned char eventData[])
+void SendPlayerRegistered(char playerId)
 {
-	printf("Sending DISTRIBUTE_ID event triggered by %s\n", PlayerEnumToString(player));
+	printf("Sending PLAYER_REGISTERED event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }
 
-void SendAllPlayersFound(PLAYER player)
+void SendAllPlayersFound(char playerId)
 {
-	printf("Sending ALL_PLAYERS_FOUND event triggered by %s\n", PlayerEnumToString(player));
+	printf("Sending ALL_PLAYERS_FOUND event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }
 
-void SendAllPlayersReady(PLAYER player)
+void SendAllPlayersReady(char playerId)
 {
-	printf("Sending ALL_PLAYERS_READY event triggered by %s\n", PlayerEnumToString(player));
+	printf("Sending ALL_PLAYERS_READY event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }
 
-void SendGameOver(PLAYER player)
+void SendGameOver(char playerId)
 {
-	printf("Sending GAME_OVER event triggered by %s\n", PlayerEnumToString(player));
+	printf("Sending GAME_OVER event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }
 
-void SendPlayerReady(PLAYER player)
+void SendPlayerReady(char playerId)
 {
-	printf("Sending PLAYER_READY event triggered by %s\n", PlayerEnumToString(player));
+	printf("Sending PLAYER_READY event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }
 
-void SendGameStart(PLAYER player)
+void SendGameStart(char playerId)
 {
-	printf("Sending GAME_START event triggered by %s\n", PlayerEnumToString(player));
+	printf("Sending GAME_START event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }

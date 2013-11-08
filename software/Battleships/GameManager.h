@@ -14,9 +14,10 @@ struct GameManager
 };
 
 void InitialiseGame();
-void AddNewPlayer(PLAYER newPlayer);
+void AddNewPlayer(PLAYER newPlayer, char newPlayerId);
 struct GameManager GetGameManager();
-void SetPlayerReady(PLAYER player);
+void SetPlayerReady(char playerId);
 int ArePlayersReady();
+PLAYER PlayerIdToPlayer(char playerId);
 
 #endif
