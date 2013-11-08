@@ -18,5 +18,6 @@ struct Board
 
 void InitialiseBoard(struct Board* board);
 struct Board GetInitialisedBoard();
+void AddHouseToBoard(struct Board* board, struct House house);
 
 #endif

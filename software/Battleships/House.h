@@ -5,14 +5,16 @@
 
 struct House
 {
-	int valid;
+	char valid;
 
-	int health;
+	char health;
 
-	int x1;
-	int y1;
-	int x2;
-	int y2;
+	char id;
+
+	char x1;
+	char y1;
+	char x2;
+	char y2;
 };
 
 void InitialiseHouse(struct House* house);

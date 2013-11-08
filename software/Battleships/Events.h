@@ -12,12 +12,13 @@
 
 typedef enum
 {
-	PLAYER_REGISTRED,
+	PLAYER_REGISTRED = 1,
 	ALL_PLAYERS_FOUND,
 	ALL_PLAYERS_READY,
 	GAME_OVER,
 	PLAYER_READY,
-	GAME_START
+	GAME_START,
+	ATTACK_RESULT
 }EVENT;
 
 void SendPlayerRegistered(char playerId);
@@ -26,5 +27,6 @@ void SendGameOver(char playerId);
 void SendPlayerReady(char playerId);
 void SendGameStart(char playerId);
 void SendAllPlayersReady(char playerId);
+void SendAttackResult(char playerId, unsigned char eventData[]);
 
 #endif

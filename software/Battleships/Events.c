@@ -30,3 +30,8 @@ void SendGameStart(char playerId)
 {
 	printf("Sending GAME_START event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 }
+
+void SendAttackResult(char playerId, unsigned char eventData[])
+{
+	printf("Sending ATTACK_RESULT event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
+}

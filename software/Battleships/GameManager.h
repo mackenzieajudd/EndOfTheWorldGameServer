@@ -14,10 +14,16 @@ struct GameManager
 };
 
 void InitialiseGame();
+
 void AddNewPlayer(PLAYER newPlayer, char newPlayerId);
+
 struct GameManager GetGameManager();
+
 void SetPlayerReady(char playerId);
 int ArePlayersReady();
+
 PLAYER PlayerIdToPlayer(char playerId);
+
+void AddHouse(char playerId, struct House house);
 
 #endif

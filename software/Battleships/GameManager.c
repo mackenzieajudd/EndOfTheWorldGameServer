@@ -74,3 +74,14 @@ PLAYER PlayerIdToPlayer(char playerId)
 
 	return NONE;
 }
+
+void AddHouse(char playerId, struct House house)
+{
+	int i;
+
+	for(i = 0; i < 2; i++)
+	{
+		if(gameManager.players[i].id == playerId)
+			AddHouseToBoard(&gameManager.players[i].board, house);
+	}
+}

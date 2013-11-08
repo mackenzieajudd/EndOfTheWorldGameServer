@@ -89,5 +89,16 @@ void HandleCommand(char playerId, COMMAND command, unsigned char commandData[])
 		case READY:
 			HandleReady(playerId);
 			break;
+		case PLACE_HOUSE:
+			HandlePlaceHouse(playerId, commandData);
+			break;
+		case PLAYER_ATTACK:
+			HandlePlayerAttack(playerId, commandData);
+			break;
+		case MESSAGE:
+			HandleMessage(playerId, commandData);
+			break;
+		default:
+			printf("Unrecognised command %d from player %c", command, PlayerEnumToString(PlayerIdToPlayer(playerId)));
 	}
 }

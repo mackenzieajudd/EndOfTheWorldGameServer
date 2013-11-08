@@ -29,3 +29,17 @@ struct Board GetInitialisedBoard()
 
 	return board;
 }
+
+void AddHouseToBoard(struct Board* board, struct House house)
+{
+	int i;
+
+	for(i = 0; i < NUMBER_OF_HOUSES; i++)
+	{
+		if((*board).houses[i].valid == 0)
+		{
+			(*board).houses[i] = house;
+			break;
+		}
+	}
+}
