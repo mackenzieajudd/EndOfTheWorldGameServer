@@ -1,4 +1,5 @@
 #include "Commands.h"
+#include "GameManager.h"
 
 void HandleRequestId(char newPlayerId)
 {
@@ -13,8 +14,12 @@ void HandleRequestId(char newPlayerId)
 	{
 		AddNewPlayer(newPlayer, newPlayerId);
 		SendPlayerRegistered(newPlayerId);
+		WritePlayerJoined(newPlayer);
 		if(requestNewPlayerResult == All_PLAYERS_FOUND)
+		{
+			DrawWaitingForReadyScreen();
 			SendAllPlayersFound(newPlayerId);
+		}
 	}
 	else
 		printf("A new PLAYER was requested but none are available\n");
@@ -26,13 +31,21 @@ void HandleQuit(char playerId)
 	SendGameOver(playerId);
 }
 
-void HandleReady(char playerId)
+void HandleReady(char playerId, unsigned char commandData[])
 {
 	printf("Handling READY command from %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 	SetPlayerReady(playerId);
+
+	PrepareBoard(playerId, commandData);
+
+	WritePlayerReady(PlayerIdToPlayer(playerId));
+
 	SendPlayerReady(playerId);
 	if(ArePlayersReady() == 1) //All Players Ready
+	{
+		DrawGameStatsScreen();
 		SendAllPlayersReady(playerId);
+	}
 }
 
 void HandlePlaceHouse(char playerId, unsigned char commandData[])
@@ -41,16 +54,19 @@ void HandlePlaceHouse(char playerId, unsigned char commandData[])
 
 	struct House newHouse = GetInitialisedHouse();
 
+	newHouse.valid = 1;
 	newHouse.id = commandData[0];
 	newHouse.x1 = commandData[1];
 	newHouse.y1 = commandData[2];
 	newHouse.x2 = commandData[3];
 	newHouse.y2 = commandData[4];
 
+	printf("House %d positioned at %d %d %d %d\n", newHouse.id, newHouse.x1, newHouse.y1, newHouse.x2, newHouse.y2);
+
 	AddHouse(playerId, newHouse);
 }
 
-void HandlePlayerAttack(char playerId, unsigned char commandData[])
+void HandleAttack(char playerId, unsigned char commandData[])
 {
 	ATTACK attack = (ATTACK)commandData[0];
 	int attackDataLength = strlen((const char*)commandData) - 1;
@@ -69,6 +85,10 @@ void HandlePlayerAttack(char playerId, unsigned char commandData[])
 			printf("Unrecognised attack %d from %s\n", attack, PlayerEnumToString(PlayerIdToPlayer(playerId)));
 			break;
 	}
+
+	UpdateScore();
+	CheckForGameEnd();
+	SendTurnOver(playerId);
 }
 
 void HandleMessage(char playerId, unsigned char commandData[])

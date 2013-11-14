@@ -1,4 +1,5 @@
 #include"Board.h"
+#include <stdio.h>
 
 void InitialiseBoard(struct Board* board)
 {
@@ -38,8 +39,29 @@ void AddHouseToBoard(struct Board* board, struct House house)
 	{
 		if((*board).houses[i].valid == 0)
 		{
+
 			(*board).houses[i] = house;
 			break;
 		}
 	}
+}
+
+int GetScore(struct Board board)
+{
+	int i;
+	int j;
+	int score = 0;
+
+	for(i = 0; i < BOARD_WIDTH; i++)
+	{
+		for(j = 0; j < BOARD_HEIGHT; j++)
+		{
+			if(board.board[i][j] == OCCUPIED_SPACE)
+			{
+				score++;
+			}
+		}
+	}
+
+	return score;
 }

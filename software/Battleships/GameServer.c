@@ -1,46 +1,79 @@
 #include <stdio.h>
-#include "HAL/inc/sys/alt_timestamp.h"
 #include "Communications.h"
 #include "VGA.h"
 #include "GameManager.h"
 
-void wait(float seconds)
-{
-	alt_timestamp_start();
-	while((float)(alt_timestamp())/(float)(alt_timestamp_freq()) < seconds);
-}
-
 int main()
 {
 	InitialiseCommunications();
-	//InitialiseVGA();
+	InitialiseVGA();
 	InitialiseGame();
 
+	wait(3);
+
+	//Testing
 	//For Testing with DE2 loop back
 	//Don't actually use PublishEvent like this
 	//These are actually commands
 	//-----------------------------------------
+
 	PublishEvent('A', REQUEST_ID, "N");
+	wait(3);
+	CheckForCommand();
 	PublishEvent('B', REQUEST_ID, "N");
-	PublishEvent('C', REQUEST_ID, "N");
-	PublishEvent('A', READY, "N");
-	PublishEvent('B', READY, "N");
-	unsigned char mockHouse[5];
-	mockHouse[0] = 'A';
-	mockHouse[1] = 0;
-	mockHouse[2] = 0;
-	mockHouse[3] = 40;
-	mockHouse[4] = 40;
-	PublishEvent('A', PLACE_HOUSE, mockHouse);
+	wait(3);
+	CheckForCommand();
+	PublishEvent('B', READY, "BBBBBBBBBBAAAAAAAAAAAAAAA");
+	wait(3);
+	CheckForCommand();
+	PublishEvent('A', READY, "AAAAAAAAAAAAAAABBBBBAAAAA");
+	wait(3);
+	CheckForCommand();
 	unsigned char mockAttack[5];
 	mockAttack[0] = BASIC_ATTACK;
-	mockAttack[1] = 20;
-	mockAttack[2] = 20;
-	mockAttack[3] = 40;
-	mockAttack[4] = 40;
+	mockAttack[1] = 65;
+	mockAttack[2] = 65;
+	mockAttack[3] = 65;
+	mockAttack[4] = 65;
+	PublishEvent('A', PLAYER_ATTACK, mockAttack);
+	wait(3);
+	CheckForCommand();
+	mockAttack[1] = 65;
+	mockAttack[2] = 68;
+	mockAttack[3] = 66;
+	mockAttack[4] = 68;
 	PublishEvent('B', PLAYER_ATTACK, mockAttack);
-	PublishEvent('A', QUIT, "N");
-	//-----------------------------------------
+	wait(3);
+	CheckForCommand();
+	mockAttack[1] = 66;
+	mockAttack[2] = 65;
+	mockAttack[3] = 69;
+	mockAttack[4] = 65;
+	PublishEvent('A', PLAYER_ATTACK, mockAttack);
+	wait(3);
+	CheckForCommand();
+	mockAttack[1] = 67;
+	mockAttack[2] = 68;
+	mockAttack[3] = 68;
+	mockAttack[4] = 68;
+	PublishEvent('B', PLAYER_ATTACK, mockAttack);
+	wait(3);
+	CheckForCommand();
+	mockAttack[1] = 65;
+	mockAttack[2] = 66;
+	mockAttack[3] = 68;
+	mockAttack[4] = 66;
+	PublishEvent('A', PLAYER_ATTACK, mockAttack);
+	wait(3);
+	CheckForCommand();
+	mockAttack[1] = 69;
+	mockAttack[2] = 68;
+	mockAttack[3] = 69;
+	mockAttack[4] = 68;
+	PublishEvent('B', PLAYER_ATTACK, mockAttack);
+	wait(3);
+	CheckForCommand();
+
 
 	while(1 == 1)
 	{

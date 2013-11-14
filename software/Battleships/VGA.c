@@ -10,12 +10,146 @@ void InitialiseVGA()
 {
 	pixel_buffer = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_0_NAME);
 	alt_up_pixel_buffer_dma_change_back_buffer_address(pixel_buffer, BACK_PIXEL_BUFFER_BASE);
-
-	char_buffer = alt_up_char_buffer_open_dev(VIDEO_CHARACTER_BUFFER_WITH_DMA_0_AVALON_CHAR_BUFFER_SLAVE_NAME);
+	char_buffer = alt_up_char_buffer_open_dev("/dev/video_character_buffer_with_dma_0");
 	alt_up_char_buffer_init(char_buffer);
 	alt_up_char_buffer_clear(char_buffer);
+
+	DrawStartScreen();
 }
 
+void BlackOutScreen()
+{
+	int i;
+
+	for(i = 0; i < 320; i++)
+	{
+		alt_up_pixel_buffer_dma_draw_vline(pixel_buffer, i, 0, 239, 0x0000, 1);
+	}
+}
+
+void DrawStartScreen()
+{
+	BlackOutScreen();
+	SwapBuffers();
+
+	alt_up_char_buffer_clear(char_buffer);
+	alt_up_char_buffer_string(char_buffer, "T h e  E n d  O f  T h e  W o r l d", 23, 15);
+	alt_up_char_buffer_string(char_buffer, "Waiting for players...", 28, 40);
+}
+
+void WritePlayerJoined(PLAYER player)
+{
+	if(player == PLAYER_1)
+	{
+		alt_up_char_buffer_string(char_buffer, "PLAYER_1 has joined", 29, 46);
+	}
+	else if(player == PLAYER_2)
+	{
+		alt_up_char_buffer_string(char_buffer, "PLAYER_2 has joined", 29, 49);
+	}
+}
+
+void WritePlayerReady(PLAYER player)
+{
+	if(player == PLAYER_1)
+	{
+		alt_up_char_buffer_string(char_buffer, "PLAYER_1 is ready!", 29, 46);
+	}
+	else if(player == PLAYER_2)
+	{
+		alt_up_char_buffer_string(char_buffer, "PLAYER_2 is ready!", 29, 49);
+	}
+}
+
+void DrawWaitingForReadyScreen()
+{
+	BlackOutScreen();
+	SwapBuffers();
+
+	alt_up_char_buffer_clear(char_buffer);
+	alt_up_char_buffer_string(char_buffer, "A l l  P l a y e r s  F o u n d", 23, 15);
+	alt_up_char_buffer_string(char_buffer, "Waiting for players to place houses...", 21, 30);
+	alt_up_char_buffer_string(char_buffer, "Press <READY> on your game device!", 22, 34);
+}
+
+void DrawGameStatsScreen()
+{
+	BlackOutScreen();
+
+	WriteGameStatsText();
+
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 160, 20, 160, 240, 0xFFFF, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 0, 20, 320, 20, 0xFFFF, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 70, 20, 70, 0, 0xFFFF, 1);
+	alt_up_pixel_buffer_dma_draw_line(pixel_buffer, 250, 0, 250, 20, 0xFFFF, 1);
+
+	UpdateScore();
+
+	SwapBuffers();
+}
+
+void WriteGameStatsText()
+{
+	alt_up_char_buffer_clear(char_buffer);
+	alt_up_char_buffer_string(char_buffer, "T h e  E n d  O f  T h e  W o r l d", 23, 2);
+	alt_up_char_buffer_string(char_buffer, "Player 1", 5, 2);
+	alt_up_char_buffer_string(char_buffer, "Player 2", 67, 2);
+}
+
+void UpdateScore()
+{
+	struct GameManager manager = GetGameManager();
+
+	struct GamePlayer player1;
+	struct GamePlayer player2;
+
+	int player1RemainingHealth = 0;
+	int player2RemainingHealth = 0;
+
+	char remainingHealth1[30];
+	char remainingHealth2[30];
+
+	int i;
+
+	for(i = 0; i < 2; i++)
+	{
+		if(manager.players[i].player == PLAYER_1)
+		{
+			player1 = manager.players[i];
+		}
+		else if(manager.players[i].player == PLAYER_2)
+		{
+			player2 = manager.players[i];
+		}
+	}
+
+	player1RemainingHealth = GetScore(player1.board);
+	player2RemainingHealth = GetScore(player2.board);
+
+
+
+	sprintf(remainingHealth1, "Health: %d", player1RemainingHealth);
+	sprintf(remainingHealth2, "Health: %d", player2RemainingHealth);
+
+	WriteGameStatsText();
+	alt_up_char_buffer_string(char_buffer, remainingHealth1, 15, 30);
+	alt_up_char_buffer_string(char_buffer, remainingHealth2, 52, 30);
+}
+
+void DrawGameOverScreen(PLAYER player)
+{
+	char playerWon[30];
+
+	BlackOutScreen();
+	alt_up_char_buffer_clear(char_buffer);
+
+	sprintf(playerWon, "%s wins!", PlayerEnumToString(player));
+
+	alt_up_char_buffer_string(char_buffer, "G a m e  O v e r", 33, 15);
+	alt_up_char_buffer_string(char_buffer, playerWon, 34, 40);
+
+	SwapBuffers();
+}
 
 void SwapBuffers()
 {

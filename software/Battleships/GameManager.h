@@ -2,11 +2,14 @@
 #define GAMEMANAGER_H_
 
 #include "GamePlayer.h"
+#include "Events.h"
 #include <stdio.h>
+#include "HAL/inc/sys/alt_timestamp.h"
 
-#define NUMBER_OF_PLAYERS 2;
-#define ALL_PLAYERS_READY 1;
-#define ALL_PLAYERS_NOT_READY 0;
+#define NUMBER_OF_PLAYERS 2
+#define ALL_GAME_PLAYERS_READY 1
+#define ALL_PLAYERS_NOT_READY 0
+#define MESSAGE_OFFSET 65
 
 struct GameManager
 {
@@ -25,5 +28,11 @@ int ArePlayersReady();
 PLAYER PlayerIdToPlayer(char playerId);
 
 void AddHouse(char playerId, struct House house);
+
+void BroadcastToPlayers(EVENT event,  unsigned char eventData[]);
+
+void wait(float seconds);
+
+void CheckForGameEnd();
 
 #endif

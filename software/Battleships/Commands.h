@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "GameManager.h"
 #include "Attack.h"
+#include "VGA.h"
 
 #define COMMAND_TYPE_SIZE 1
 #define REQUEST_ID_SIZE 1
@@ -17,7 +18,7 @@
 
 typedef enum
 {
-	REQUEST_ID = 1,
+	REQUEST_ID = 65,
 	QUIT,
 	READY,
 	PLACE_HOUSE,
@@ -27,7 +28,7 @@ typedef enum
 
 void HandleRequestId(char newPlayerId);
 void HandleQuit(char playerId);
-void HandleReady(char playerId);
+void HandleReady(char playerId, unsigned char commandData[]);
 void HandlePlaceHouse(char playerId, unsigned char commandData[]);
 void HandleAttack(char playerId, unsigned char commandData[]);
 void HandleMessage(char playerId, unsigned char commandData[]);

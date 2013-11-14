@@ -3,7 +3,7 @@
 
 typedef enum
 {
-	NONE,
+	NONE = 65,
 	PLAYER_1,
 	PLAYER_2
 }PLAYER;
