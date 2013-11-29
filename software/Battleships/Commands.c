@@ -31,7 +31,7 @@ void HandleQuit(char playerId)
 	SendGameOver(playerId);
 }
 
-void HandleReady(char playerId, unsigned char commandData[])
+void HandleReady(char playerId, unsigned char commandData[], int commandSize)
 {
 	printf("Handling READY command from %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 	SetPlayerReady(playerId);
@@ -48,7 +48,7 @@ void HandleReady(char playerId, unsigned char commandData[])
 	}
 }
 
-void HandlePlaceHouse(char playerId, unsigned char commandData[])
+void HandlePlaceHouse(char playerId, unsigned char commandData[], int commandSize)
 {
 	printf("Handling PLACE_HOUSE command from %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 
@@ -66,10 +66,10 @@ void HandlePlaceHouse(char playerId, unsigned char commandData[])
 	AddHouse(playerId, newHouse);
 }
 
-void HandleAttack(char playerId, unsigned char commandData[])
+void HandleAttack(char playerId, unsigned char commandData[], int commandSize)
 {
 	ATTACK attack = (ATTACK)commandData[0];
-	int attackDataLength = strlen((const char*)commandData) - 1;
+	int attackDataLength = commandSize - 1;
 	int i;
 	unsigned char attackData[attackDataLength];
 
@@ -80,6 +80,8 @@ void HandleAttack(char playerId, unsigned char commandData[])
 	{
 		case BASIC_ATTACK:
 			HandleBasicAttack(playerId, attackData);
+			break;
+		case SCATTER_ATTACK:
 			break;
 		default:
 			printf("Unrecognised attack %d from %s\n", attack, PlayerEnumToString(PlayerIdToPlayer(playerId)));

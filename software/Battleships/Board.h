@@ -4,8 +4,8 @@
 #include "House.h"
 
 #define NUMBER_OF_HOUSES 10
-#define BOARD_WIDTH 5
-#define BOARD_HEIGHT 5
+#define BOARD_WIDTH 8
+#define BOARD_HEIGHT 8
 #define INITIALIZATION_CHARACTER '0'
 #define UNOCCUPIED_SPACE 'A'
 #define OCCUPIED_SPACE 'B'

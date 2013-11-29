@@ -4,7 +4,7 @@
 void HandleBasicAttack(char playerId, unsigned char attackData[])
 {
 	printf("Handling BASIC_ATTACK from player %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
-	BasicAttackPlayer(playerId, (attackData[0] - MESSAGE_OFFSET), (attackData[1] - MESSAGE_OFFSET), (attackData[2] - MESSAGE_OFFSET), (attackData[3] - MESSAGE_OFFSET));
+	BasicAttackPlayer(playerId, (attackData[0] - (int)UNOCCUPIED_SPACE), (attackData[1] - (int)UNOCCUPIED_SPACE), (attackData[2] - (int)UNOCCUPIED_SPACE), (attackData[3] - (int)UNOCCUPIED_SPACE));
 }
 
 void CalculateBasicDamages(struct GamePlayer* player, char x1, char y1, char x2, char y2)
@@ -23,7 +23,7 @@ void CalculateBasicDamages(struct GamePlayer* player, char x1, char y1, char x2,
 		{
 			if((*player).board.board[j][k] == OCCUPIED_SPACE)
 			{
-				results[0] = (*player).id;
+				results[0] = (*player).id  + MESSAGE_OFFSET;
 				results[1] = HIT;
 				results[2] = j + MESSAGE_OFFSET;
 				results[3] = k + MESSAGE_OFFSET;
@@ -34,7 +34,7 @@ void CalculateBasicDamages(struct GamePlayer* player, char x1, char y1, char x2,
 			}
 			else
 			{
-				results[0] = (*player).id;
+				results[0] = (*player).id + MESSAGE_OFFSET;
 				results[1] = MISS;
 				results[2] = j + MESSAGE_OFFSET;
 				results[3] = k + MESSAGE_OFFSET;

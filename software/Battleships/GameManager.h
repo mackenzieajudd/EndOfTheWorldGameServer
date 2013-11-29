@@ -29,10 +29,12 @@ PLAYER PlayerIdToPlayer(char playerId);
 
 void AddHouse(char playerId, struct House house);
 
-void BroadcastToPlayers(EVENT event,  unsigned char eventData[]);
+void BroadcastToPlayers(EVENT event,  unsigned char eventData[], int eventSizeInBytes);
 
 void wait(float seconds);
 
 void CheckForGameEnd();
+
+void BasicAttackPlayer(char attackingPlayerId, char x1, char y1, char x2, char y2);
 
 #endif

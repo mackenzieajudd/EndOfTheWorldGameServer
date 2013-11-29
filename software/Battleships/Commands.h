@@ -18,7 +18,7 @@
 
 typedef enum
 {
-	REQUEST_ID = 65,
+	REQUEST_ID = 'A',
 	QUIT,
 	READY,
 	PLACE_HOUSE,
@@ -28,9 +28,9 @@ typedef enum
 
 void HandleRequestId(char newPlayerId);
 void HandleQuit(char playerId);
-void HandleReady(char playerId, unsigned char commandData[]);
-void HandlePlaceHouse(char playerId, unsigned char commandData[]);
-void HandleAttack(char playerId, unsigned char commandData[]);
+void HandleReady(char playerId, unsigned char commandData[], int commandSize);
+void HandlePlaceHouse(char playerId, unsigned char commandData[], int commandSize);
+void HandleAttack(char playerId, unsigned char commandData[], int commandSize);
 void HandleMessage(char playerId, unsigned char commandData[]);
 
 #endif

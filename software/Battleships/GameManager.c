@@ -83,7 +83,7 @@ PLAYER PlayerIdToPlayer(char playerId)
 	return NONE;
 }
 
-void BroadcastToPlayers(EVENT event,  unsigned char eventData[])
+void BroadcastToPlayers(EVENT event,  unsigned char eventData[], int eventSizeInBytes)
 {
 	int i;
 
@@ -91,7 +91,7 @@ void BroadcastToPlayers(EVENT event,  unsigned char eventData[])
 	{
 		if(gameManager.players[i].valid == 1)
 		{
-			PublishEvent(gameManager.players[i].id, event, eventData);
+			PublishEvent(gameManager.players[i].id, event, eventData, eventSizeInBytes);
 			printf("Broadcasting event %d to %s\n", event, PlayerEnumToString(PlayerIdToPlayer(gameManager.players[i].id)));
 			wait(.15);
 		}
@@ -139,7 +139,7 @@ void BasicAttackPlayer(char attackingPlayerId, char x1, char y1, char x2, char y
 	for(i = 0; i < 2; i++)
 	{
 		if(gameManager.players[i].id != attackingPlayerId)
-			CalculateBasicDamages(&gameManager.players[i], x1, y1, x2, y2);
+			CalculateBasicDamages(&(gameManager.players[i]), x1, y1, x2, y2);
 	}
 }
 
@@ -147,10 +147,10 @@ void CheckForGameEnd()
 {
 	if(GetScore(gameManager.players[0].board) == 0)
 	{
-		SendGameOver(gameManager.players[0].id);
+		SendGameOver(gameManager.players[1].id);
 	}
 	else if(GetScore(gameManager.players[1].board) == 0)
 	{
-		SendGameOver(gameManager.players[1].id);
+		SendGameOver(gameManager.players[0].id);
 	}
 }

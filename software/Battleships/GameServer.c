@@ -16,7 +16,7 @@ int main()
 	//Don't actually use PublishEvent like this
 	//These are actually commands
 	//-----------------------------------------
-
+	/*
 	PublishEvent('A', REQUEST_ID, "N");
 	wait(3);
 	CheckForCommand();
@@ -73,12 +73,12 @@ int main()
 	PublishEvent('B', PLAYER_ATTACK, mockAttack);
 	wait(3);
 	CheckForCommand();
+	*/
 
 
 	while(1 == 1)
 	{
 		CheckForCommand();
-		wait(.1);
 	}
 
 	return 0;

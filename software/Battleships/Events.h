@@ -9,10 +9,11 @@
 #define GAME_OVER_SIZE 0
 #define PLAYER_READY_SIZE 0
 #define GAME_START_SIZE 0
+#define NO_DATA (unsigned char*)""
 
 typedef enum
 {
-	PLAYER_REGISTRED = 65,
+	PLAYER_REGISTRED = 'A',
 	ALL_PLAYERS_FOUND,
 	ALL_PLAYERS_READY,
 	GAME_OVER,

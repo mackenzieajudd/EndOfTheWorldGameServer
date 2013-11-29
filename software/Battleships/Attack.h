@@ -10,7 +10,8 @@
 
 typedef enum
 {
-	BASIC_ATTACK = 65
+	BASIC_ATTACK = 65,
+	SCATTER_ATTACK
 }ATTACK;
 
 void HandleBasicAttack(char playerId, unsigned char attackData[]);
