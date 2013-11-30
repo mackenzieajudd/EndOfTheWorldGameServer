@@ -7,6 +7,19 @@ void HandleBasicAttack(char playerId, unsigned char attackData[])
 	BasicAttackPlayer(playerId, (attackData[0] - (int)UNOCCUPIED_SPACE), (attackData[1] - (int)UNOCCUPIED_SPACE), (attackData[2] - (int)UNOCCUPIED_SPACE), (attackData[3] - (int)UNOCCUPIED_SPACE));
 }
 
+void HandleScatterAttack(char playerId, unsigned char attackData[])
+{
+	int numAttacks = attackData[0];
+	int i;
+
+	printf("Handling SCATTER_ATTACK from player %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
+
+	for(i = 0; i < numAttacks; i++)
+	{
+		BasicAttackPlayer(playerId, (attackData[(2 * i) + 1] - (int)UNOCCUPIED_SPACE), (attackData[(2 * i) + 2] - (int)UNOCCUPIED_SPACE), (attackData[(2 * i) + 1] - (int)UNOCCUPIED_SPACE), (attackData[(2 * i) + 2] - (int)UNOCCUPIED_SPACE));
+	}
+}
+
 void CalculateBasicDamages(struct GamePlayer* player, char x1, char y1, char x2, char y2)
 {
 	int i;

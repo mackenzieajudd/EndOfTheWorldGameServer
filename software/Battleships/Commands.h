@@ -26,7 +26,7 @@ typedef enum
 	MESSAGE
 }COMMAND;
 
-void HandleRequestId(char newPlayerId);
+void HandleRequestId(char newPlayerId, unsigned char commandData[], int commandSize);
 void HandleQuit(char playerId);
 void HandleReady(char playerId, unsigned char commandData[], int commandSize);
 void HandlePlaceHouse(char playerId, unsigned char commandData[], int commandSize);

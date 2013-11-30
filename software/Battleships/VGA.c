@@ -39,25 +39,88 @@ void DrawStartScreen()
 
 void WritePlayerJoined(PLAYER player)
 {
+	char p1Message[30];
+	char p2Message[30];
+
+	int i;
+
+
+	int playerOneNameLength = PlayerToPlayerNameLength(PLAYER_1);
+	int playerTwoNameLength = PlayerToPlayerNameLength(PLAYER_2);
+
+	char* playerNameRaw1 = PlayerToPlayerName(PLAYER_1);
+	char* playerNameRaw2 = PlayerToPlayerName(PLAYER_2);
+
+	char playerName1[playerOneNameLength];
+	char playerName2[playerTwoNameLength];
+
+	printf("%d", playerOneNameLength);
+
+
+	for(i = 0; i < playerOneNameLength; i++)
+	{
+		playerName1[i] = playerNameRaw1[i];
+	}
+
+	/*
+	for(i = 0; i < playerTwoNameLength; i++)
+	{
+		playerName2[i] = playerNameRaw2[i];
+	}
+	*/
+
+
+	sprintf(p1Message, "%s has joined", playerName1);
+	sprintf(p2Message, "%s has joined", PlayerToPlayerName(PLAYER_2));
+
 	if(player == PLAYER_1)
 	{
-		alt_up_char_buffer_string(char_buffer, "PLAYER_1 has joined", 29, 46);
+		alt_up_char_buffer_string(char_buffer, p1Message, 29, 46);
 	}
 	else if(player == PLAYER_2)
 	{
-		alt_up_char_buffer_string(char_buffer, "PLAYER_2 has joined", 29, 49);
+		alt_up_char_buffer_string(char_buffer, p2Message, 29, 49);
 	}
 }
 
 void WritePlayerReady(PLAYER player)
 {
+	int i;
+
+	char p1Message[30];
+	char p2Message[30];
+
+	/*
+	int playerOneNameLength = PlayerToPlayerNameLength(PLAYER_1);
+	int playerTwoNameLength = PlayerToPlayerNameLength(PLAYER_2);
+
+	char* playerNameRaw1 = PlayerToPlayerName(PLAYER_1);
+	char* playerNameRaw2 = PlayerToPlayerName(PLAYER_2);
+
+	char playerName1[playerOneNameLength];
+	char playerName2[playerTwoNameLength];
+
+	for(i = 0; i < playerOneNameLength; i++)
+	{
+		playerName1[i] = playerNameRaw1[i];
+	}
+
+	for(i = 0; i < playerTwoNameLength; i++)
+	{
+		playerName2[i] = playerNameRaw2[i];
+	}
+	*/
+
+	sprintf(p1Message, "%s is ready!", PlayerToPlayerName(PLAYER_1));
+	sprintf(p2Message, "%s is ready!", PlayerToPlayerName(PLAYER_2));
+
 	if(player == PLAYER_1)
 	{
-		alt_up_char_buffer_string(char_buffer, "PLAYER_1 is ready!", 29, 46);
+		alt_up_char_buffer_string(char_buffer, p1Message, 29, 46);
 	}
 	else if(player == PLAYER_2)
 	{
-		alt_up_char_buffer_string(char_buffer, "PLAYER_2 is ready!", 29, 49);
+		alt_up_char_buffer_string(char_buffer, p2Message, 29, 49);
 	}
 }
 
@@ -90,10 +153,39 @@ void DrawGameStatsScreen()
 
 void WriteGameStatsText()
 {
+	int i;
+
+	char p1Message[30];
+	char p2Message[30];
+
+	/*
+	int playerOneNameLength = PlayerToPlayerNameLength(PLAYER_1);
+	int playerTwoNameLength = PlayerToPlayerNameLength(PLAYER_2);
+	char* playerNameRaw1 = PlayerToPlayerName(PLAYER_1);
+	char* playerNameRaw2 = PlayerToPlayerName(PLAYER_2);
+
+
+	char playerName1[playerOneNameLength];
+	char playerName2[playerTwoNameLength];
+
+	for(i = 0; i < playerOneNameLength; i++)
+	{
+		playerName1[i] = playerNameRaw1[i];
+	}
+
+	for(i = 0; i < playerTwoNameLength; i++)
+	{
+		playerName2[i] = playerNameRaw2[i];
+	}
+	*/
+
+	sprintf(p1Message, "%s", PlayerToPlayerName(PLAYER_1));
+	sprintf(p2Message, "%s", PlayerToPlayerName(PLAYER_2));
+
 	alt_up_char_buffer_clear(char_buffer);
 	alt_up_char_buffer_string(char_buffer, "T h e  E n d  O f  T h e  W o r l d", 23, 2);
-	alt_up_char_buffer_string(char_buffer, "Player 1", 5, 2);
-	alt_up_char_buffer_string(char_buffer, "Player 2", 67, 2);
+	alt_up_char_buffer_string(char_buffer, p1Message, 5, 2);
+	alt_up_char_buffer_string(char_buffer, p2Message, 67, 2);
 }
 
 void UpdateScore()
@@ -126,8 +218,6 @@ void UpdateScore()
 	player1RemainingHealth = GetScore(player1.board);
 	player2RemainingHealth = GetScore(player2.board);
 
-
-
 	sprintf(remainingHealth1, "Health: %d", player1RemainingHealth);
 	sprintf(remainingHealth2, "Health: %d", player2RemainingHealth);
 
@@ -140,10 +230,23 @@ void DrawGameOverScreen(PLAYER player)
 {
 	char playerWon[30];
 
+	/*
+	int i;
+
+	int playerNameLength = PlayerToPlayerNameLength(player);
+	char* playerNameRaw = PlayerToPlayerName(player);
+	char playerName[playerNameLength];
+
+	for(i = 0; i < playerNameLength; i++)
+	{
+		playerName[i] = playerNameRaw[i];
+	}
+	*/
+
 	BlackOutScreen();
 	alt_up_char_buffer_clear(char_buffer);
 
-	sprintf(playerWon, "%s wins!", PlayerEnumToString(player));
+	sprintf(playerWon, "%s wins!", PlayerToPlayerName(player));
 
 	alt_up_char_buffer_string(char_buffer, "G a m e  O v e r", 33, 15);
 	alt_up_char_buffer_string(char_buffer, playerWon, 34, 40);

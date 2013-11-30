@@ -15,6 +15,7 @@ typedef enum
 }ATTACK;
 
 void HandleBasicAttack(char playerId, unsigned char attackData[]);
+void HandleScatterAttack(char playerId, unsigned char attackData[]);
 
 void CalculateBasicDamages(struct GamePlayer* player, char x1, char y1, char x2, char y2);
 

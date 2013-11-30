@@ -20,7 +20,7 @@ void InitialiseGame()
 	printf("Game Initialised\n");
 }
 
-void AddNewPlayer(PLAYER newPlayer, char newPlayerId)
+void AddNewPlayer(PLAYER newPlayer, char newPlayerId, char* playerName, int nameSize)
 {
 	int i;
 
@@ -28,7 +28,7 @@ void AddNewPlayer(PLAYER newPlayer, char newPlayerId)
 	{
 		if(gameManager.players[i].valid == 0)
 		{
-			gameManager.players[i] = GetNewGamePlayer(newPlayer, newPlayerId);
+			gameManager.players[i] = GetNewGamePlayer(newPlayer, newPlayerId, playerName, nameSize);
 			break;
 		}
 	}
@@ -81,6 +81,32 @@ PLAYER PlayerIdToPlayer(char playerId)
 	}
 
 	return NONE;
+}
+
+char* PlayerToPlayerName(PLAYER player)
+{
+	int i;
+
+	for(i = 0; i < 2; i++)
+	{
+		if(gameManager.players[i].player == player)
+			return gameManager.players[i].name;
+	}
+
+	return "";
+}
+
+int PlayerToPlayerNameLength(PLAYER player)
+{
+	int i;
+
+	for(i = 0; i < 2; i++)
+	{
+		if(gameManager.players[i].player == player)
+			return gameManager.players[i].nameSize;
+	}
+
+	return "";
 }
 
 void BroadcastToPlayers(EVENT event,  unsigned char eventData[], int eventSizeInBytes)

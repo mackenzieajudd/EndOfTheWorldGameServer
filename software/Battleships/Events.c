@@ -31,10 +31,14 @@ void SendAllPlayersReady(char playerId)
 
 void SendGameOver(char playerId)
 {
+	unsigned char eventData[1];
+
 	printf("Sending GAME_OVER event triggered by %s\n", PlayerEnumToString(PlayerIdToPlayer(playerId)));
 	DrawGameOverScreen(PlayerIdToPlayer(playerId));
 
-	BroadcastToPlayers(GAME_OVER, NO_DATA, 0);
+	eventData[0] = playerId + MESSAGE_OFFSET;
+
+	BroadcastToPlayers(GAME_OVER, eventData, 1);
 }
 
 void SendPlayerReady(char playerId)

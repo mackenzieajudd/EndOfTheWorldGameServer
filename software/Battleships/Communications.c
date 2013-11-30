@@ -106,7 +106,7 @@ void HandleCommand(char playerId, COMMAND command, unsigned char commandData[], 
 	switch(command)
 	{
 		case REQUEST_ID:
-			HandleRequestId(playerId);
+			HandleRequestId(playerId, commandData, commandSize);
 			break;
 		case QUIT:
 			HandleQuit(playerId);

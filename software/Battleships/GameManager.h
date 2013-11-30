@@ -18,7 +18,7 @@ struct GameManager
 
 void InitialiseGame();
 
-void AddNewPlayer(PLAYER newPlayer, char newPlayerId);
+void AddNewPlayer(PLAYER newPlayer, char newPlayerId, char* playerName, int nameSize);
 
 struct GameManager GetGameManager();
 
@@ -26,6 +26,8 @@ void SetPlayerReady(char playerId);
 int ArePlayersReady();
 
 PLAYER PlayerIdToPlayer(char playerId);
+char* PlayerToPlayerName(PLAYER player);
+int PlayerToPlayerNameLength(PLAYER player);
 
 void AddHouse(char playerId, struct House house);
 

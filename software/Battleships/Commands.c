@@ -1,18 +1,27 @@
 #include "Commands.h"
 #include "GameManager.h"
 
-void HandleRequestId(char newPlayerId)
+void HandleRequestId(char newPlayerId, unsigned char commandData[], int commandSize)
 {
 	PLAYER newPlayer;
+	int i;
 
 	printf("Handling REQUEST_ID command\n");
+
+	//Allocate Memory for Command
+	char* name = malloc(commandSize);
+
+	for(i = 0; i < commandSize; i++)
+	{
+		name[i] = commandData[i];
+	}
 
 	//Request a new PLAYER
 	int requestNewPlayerResult = GetNewPlayer(&newPlayer);
 
 	if(requestNewPlayerResult != ALL_PLAYERS_TAKEN)
 	{
-		AddNewPlayer(newPlayer, newPlayerId);
+		AddNewPlayer(newPlayer, newPlayerId, name, commandSize);
 		SendPlayerRegistered(newPlayerId);
 		WritePlayerJoined(newPlayer);
 		if(requestNewPlayerResult == All_PLAYERS_FOUND)
@@ -46,6 +55,9 @@ void HandleReady(char playerId, unsigned char commandData[], int commandSize)
 		DrawGameStatsScreen();
 		SendAllPlayersReady(playerId);
 	}
+
+	////////////////////////////////////////TESTING
+	SendGameOver(playerId);
 }
 
 void HandlePlaceHouse(char playerId, unsigned char commandData[], int commandSize)
@@ -82,6 +94,7 @@ void HandleAttack(char playerId, unsigned char commandData[], int commandSize)
 			HandleBasicAttack(playerId, attackData);
 			break;
 		case SCATTER_ATTACK:
+			HandleScatterAttack(playerId, attackData);
 			break;
 		default:
 			printf("Unrecognised attack %d from %s\n", attack, PlayerEnumToString(PlayerIdToPlayer(playerId)));

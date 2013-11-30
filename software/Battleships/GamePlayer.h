@@ -12,6 +12,9 @@ struct GamePlayer
 
 	int ready;
 
+	char* name;
+	int nameSize;
+
 	struct Board board;
 	PLAYER player;
 	char id;
@@ -19,7 +22,7 @@ struct GamePlayer
 
 void InitialiseGamePlayer(struct GamePlayer* gameplayer);
 struct GamePlayer GetInitialisedGamePlayer();
-struct GamePlayer GetNewGamePlayer(PLAYER newPlayer, char newPlayerId);
+struct GamePlayer GetNewGamePlayer(PLAYER newPlayer, char newPlayerId, char* playerName, int nameSize);
 int IsPlayerReady(struct GamePlayer gamePlayer);
 
 #endif
