@@ -55,9 +55,6 @@ void HandleReady(char playerId, unsigned char commandData[], int commandSize)
 		DrawGameStatsScreen();
 		SendAllPlayersReady(playerId);
 	}
-
-	////////////////////////////////////////TESTING
-	SendGameOver(playerId);
 }
 
 void HandlePlaceHouse(char playerId, unsigned char commandData[], int commandSize)
@@ -109,4 +106,9 @@ void HandleAttack(char playerId, unsigned char commandData[], int commandSize)
 void HandleMessage(char playerId, unsigned char commandData[])
 {
 
+}
+
+void HandleReset(char playerId)
+{
+	InitialiseGame();
 }

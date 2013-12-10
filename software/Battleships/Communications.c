@@ -123,6 +123,9 @@ void HandleCommand(char playerId, COMMAND command, unsigned char commandData[], 
 		case MESSAGE:
 			HandleMessage(playerId, commandData);
 			break;
+		case RESET:
+			HandleReset(playerId);
+			break;
 		default:
 			printf("Unrecognised command %d from player %s\n", command, PlayerEnumToString(PlayerIdToPlayer(playerId)));
 	}

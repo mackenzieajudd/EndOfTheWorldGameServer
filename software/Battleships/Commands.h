@@ -23,7 +23,8 @@ typedef enum
 	READY,
 	PLACE_HOUSE,
 	PLAYER_ATTACK,
-	MESSAGE
+	MESSAGE,
+	RESET
 }COMMAND;
 
 void HandleRequestId(char newPlayerId, unsigned char commandData[], int commandSize);
@@ -32,5 +33,6 @@ void HandleReady(char playerId, unsigned char commandData[], int commandSize);
 void HandlePlaceHouse(char playerId, unsigned char commandData[], int commandSize);
 void HandleAttack(char playerId, unsigned char commandData[], int commandSize);
 void HandleMessage(char playerId, unsigned char commandData[]);
+void HandleReset(char playerId);
 
 #endif

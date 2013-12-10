@@ -70,8 +70,8 @@ void WritePlayerJoined(PLAYER player)
 	*/
 
 
-	sprintf(p1Message, "%s has joined", playerName1);
-	sprintf(p2Message, "%s has joined", PlayerToPlayerName(PLAYER_2));
+	sprintf(p1Message, "%s has joined", PlayerEnumToString(PLAYER_1));
+	sprintf(p2Message, "%s has joined", PlayerEnumToString(PLAYER_2));
 
 	if(player == PLAYER_1)
 	{
@@ -111,8 +111,8 @@ void WritePlayerReady(PLAYER player)
 	}
 	*/
 
-	sprintf(p1Message, "%s is ready!", PlayerToPlayerName(PLAYER_1));
-	sprintf(p2Message, "%s is ready!", PlayerToPlayerName(PLAYER_2));
+	sprintf(p1Message, "%s is ready!", PlayerEnumToString(PLAYER_1));
+	sprintf(p2Message, "%s is ready!", PlayerEnumToString(PLAYER_2));
 
 	if(player == PLAYER_1)
 	{
@@ -179,8 +179,8 @@ void WriteGameStatsText()
 	}
 	*/
 
-	sprintf(p1Message, "%s", PlayerToPlayerName(PLAYER_1));
-	sprintf(p2Message, "%s", PlayerToPlayerName(PLAYER_2));
+	sprintf(p1Message, "%s", PlayerEnumToString(PLAYER_1));
+	sprintf(p2Message, "%s", PlayerEnumToString(PLAYER_2));
 
 	alt_up_char_buffer_clear(char_buffer);
 	alt_up_char_buffer_string(char_buffer, "T h e  E n d  O f  T h e  W o r l d", 23, 2);
@@ -246,7 +246,7 @@ void DrawGameOverScreen(PLAYER player)
 	BlackOutScreen();
 	alt_up_char_buffer_clear(char_buffer);
 
-	sprintf(playerWon, "%s wins!", PlayerToPlayerName(player));
+	sprintf(playerWon, "%s wins!", PlayerEnumToString(player));
 
 	alt_up_char_buffer_string(char_buffer, "G a m e  O v e r", 33, 15);
 	alt_up_char_buffer_string(char_buffer, playerWon, 34, 40);
