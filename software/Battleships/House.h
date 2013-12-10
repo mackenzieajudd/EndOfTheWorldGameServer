@@ -3,6 +3,7 @@
 
 #define HOUSE_STARTING_HEALTH 100
 
+//NOT USED IN CURRENT VERSION
 struct House
 {
 	char valid;
