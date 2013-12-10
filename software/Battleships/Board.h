@@ -14,6 +14,7 @@ struct Board
 {
 	int valid;
 
+	//Houses are not used in the current version. Houses are instead represented directly on the board.
 	struct House houses[NUMBER_OF_HOUSES];
 	char board[BOARD_WIDTH][BOARD_HEIGHT];
 };
